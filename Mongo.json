@@ -1,0 +1,372 @@
+use socialMediaDB;
+switched to db socialMediaDB
+socialMediaDB> db.appUsers.insertMany([
+...   {
+...     _id: 1,
+...     name: "Alice Smith",
+...     email: "alice.smith@gmail.com",
+...     dateOfBirth: ISODate("1995-04-12"),
+...     joinDate: ISODate("2023-01-01"),
+...     type: "regular",
+...     bio: "Nature lover and coder.",
+...     profilePicture: "alice.jpg",
+...     lastLogin: ISODate("2024-01-01")
+...   },
+...   {
+...     _id: 2,
+...     name: "Bob Lee",
+...     email: "bob.lee@outlook.com",
+...     dateOfBirth: ISODate("1990-06-24"),
+...     joinDate: ISODate("2023-02-10"),
+...     type: "regular",
+...     bio: "Tech enthusiast.",
+...     profilePicture: "bob.jpg",
+...     lastLogin: ISODate("2024-01-15")
+...   },
+...   {
+...     _id: 3,
+...     name: "Charlie Admin",
+...     email: "charlie.admin@gmail.com",
+...     dateOfBirth: ISODate("1985-01-01"),
+...     joinDate: ISODate("2023-03-15"),
+...     type: "admin",
+...     role: "Moderator",
+...     permissions: ["CREATE", "DELETE", "BAN"],
+...     lastActivity: ISODate("2024-01-20")
+...   },
+...   {
+...     _id: 4,
+...     name: "Dana White",
+...     email: "dana.white@outlook.com",
+...     dateOfBirth: ISODate("1992-09-18"),
+...     joinDate: ISODate("2023-04-05"),
+...     type: "regular",
+...     bio: "Food blogger.",
+...     profilePicture: "dana.jpg",
+...     lastLogin: ISODate("2024-02-10")
+...   },
+...   {
+...     _id: 5,
+...     name: "Ethan Ray",
+...     email: "ethan.ray@gmail.com",
+...     dateOfBirth: ISODate("1998-11-30"),
+...     joinDate: ISODate("2023-05-20"),
+...     type: "regular",
+...     bio: "Travel photographer.",
+...     profilePicture: "ethan.jpg",
+...     lastLogin: ISODate("2024-03-05")
+...   }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: { '0': 1, '1': 2, '2': 3, '3': 4, '4': 5 }
+}
+socialMediaDB> db.posts.insertMany([
+...   {
+...     _id: 1001,
+...     content: "Hello world! This is my first post.",
+...     postDate: ISODate("2024-01-05"),
+...     userID: 1
+...   },
+...   {
+...     _id: 1002,
+...     content: "Excited about the new tech conference!",
+...     postDate: ISODate("2024-01-07"),
+...     userID: 2
+...   },
+...   {
+...     _id: 1003,
+...     content: "Check out my latest recipe!",
+...     postDate: ISODate("2024-02-15"),
+...     userID: 4
+...   },
+...   {
+...     _id: 1004,
+...     content: "Sunset at Bali was unreal.",
+...     postDate: ISODate("2024-03-01"),
+...     userID: 5
+...   },
+...   {
+...     _id: 1005,
+...     content: "Maintenance update completed.",
+...     postDate: ISODate("2024-01-25"),
+...     userID: 3
+...   }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: { '0': 1001, '1': 1002, '2': 1003, '3': 1004, '4': 1005 }
+}
+socialMediaDB> db.postComments.insertMany([
+...   { _id: 201, content: "Nice post!", commentDate: ISODate("2024-01-06"), userID: 2, postID: 1001 },
+...   { _id: 202, content: "Love this!", commentDate: ISODate("2024-02-16"), userID: 1, postID: 1003 },
+...   { _id: 203, content: "Great view!", commentDate: ISODate("2024-03-02"), userID: 4, postID: 1004 },
+...   { _id: 204, content: "Thanks for the update.", commentDate: ISODate("2024-01-26"), userID: 5, postID: 1005 },
+...   { _id: 205, content: "I will attend too!", commentDate: ISODate("2024-01-08"), userID: 4, postID: 1002 }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: { '0': 201, '1': 202, '2': 203, '3': 204, '4': 205 }
+}
+socialMediaDB> db.postLikes.insertMany([
+...   { _id: 301, likeDate: ISODate("2024-01-06"), userID: 2, postID: 1001 },
+...   { _id: 302, likeDate: ISODate("2024-01-08"), userID: 1, postID: 1002 },
+...   { _id: 303, likeDate: ISODate("2024-02-16"), userID: 5, postID: 1003 },
+...   { _id: 304, likeDate: ISODate("2024-03-02"), userID: 2, postID: 1004 },
+...   { _id: 305, likeDate: ISODate("2024-01-26"), userID: 4, postID: 1005 }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: { '0': 301, '1': 302, '2': 303, '3': 304, '4': 305 }
+}
+socialMediaDB> db.userFollowers.insertMany([
+...   { _id: 401, userID: 1, followsUserID: 2 },
+...   { _id: 402, userID: 2, followsUserID: 1 },
+...   { _id: 403, userID: 5, followsUserID: 4 },
+...   { _id: 404, userID: 4, followsUserID: 5 },
+...   { _id: 405, userID: 2, followsUserID: 3 }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: { '0': 401, '1': 402, '2': 403, '3': 404, '4': 405 }
+}
+socialMediaDB> db.appUsers.find({ type: "regular" });
+[
+  {
+    _id: 1,
+    name: 'Alice Smith',
+    email: 'alice.smith@gmail.com',
+    dateOfBirth: ISODate('1995-04-12T00:00:00.000Z'),
+    joinDate: ISODate('2023-01-01T00:00:00.000Z'),
+    type: 'regular',
+    bio: 'Nature lover and coder.',
+    profilePicture: 'alice.jpg',
+    lastLogin: ISODate('2024-01-01T00:00:00.000Z')
+  },
+  {
+    _id: 2,
+    name: 'Bob Lee',
+    email: 'bob.lee@outlook.com',
+    dateOfBirth: ISODate('1990-06-24T00:00:00.000Z'),
+    joinDate: ISODate('2023-02-10T00:00:00.000Z'),
+    type: 'regular',
+    bio: 'Tech enthusiast.',
+    profilePicture: 'bob.jpg',
+    lastLogin: ISODate('2024-01-15T00:00:00.000Z')
+  },
+  {
+    _id: 4,
+    name: 'Dana White',
+    email: 'dana.white@outlook.com',
+    dateOfBirth: ISODate('1992-09-18T00:00:00.000Z'),
+    joinDate: ISODate('2023-04-05T00:00:00.000Z'),
+    type: 'regular',
+    bio: 'Food blogger.',
+    profilePicture: 'dana.jpg',
+    lastLogin: ISODate('2024-02-10T00:00:00.000Z')
+  },
+  {
+    _id: 5,
+    name: 'Ethan Ray',
+    email: 'ethan.ray@gmail.com',
+    dateOfBirth: ISODate('1998-11-30T00:00:00.000Z'),
+    joinDate: ISODate('2023-05-20T00:00:00.000Z'),
+    type: 'regular',
+    bio: 'Travel photographer.',
+    profilePicture: 'ethan.jpg',
+    lastLogin: ISODate('2024-03-05T00:00:00.000Z')
+  }
+]
+socialMediaDB> db.posts.find({ userID: 1 });
+[
+  {
+    _id: 1001,
+    content: 'Hello world! This is my first post.',
+    postDate: ISODate('2024-01-05T00:00:00.000Z'),
+    userID: 1
+  }
+]
+socialMediaDB> db.postComments.find({ postID: 1003 });
+[
+  {
+    _id: 202,
+    content: 'Love this!',
+    commentDate: ISODate('2024-02-16T00:00:00.000Z'),
+    userID: 1,
+    postID: 1003
+  }
+]
+socialMediaDB> db.postLikes.aggregate([
+...   { $group: { _id: "$postID", likeCount: { $sum: 1 } } }
+... ]);
+[
+  { _id: 1002, likeCount: 1 },
+  { _id: 1004, likeCount: 1 },
+  { _id: 1005, likeCount: 1 },
+  { _id: 1003, likeCount: 1 },
+  { _id: 1001, likeCount: 1 }
+]
+socialMediaDB> db.userFollowers.find({ userID: 1 });
+[ { _id: 401, userID: 1, followsUserID: 2 } ]
+socialMediaDB> db.postComments.aggregate([
+...   {
+...     $lookup: {
+...       from: "appUsers",
+...       localField: "userID",
+...       foreignField: "_id",
+...       as: "user"
+...     }
+...   },
+...   { $unwind: "$user" },
+...   {
+...     $lookup: {
+...       from: "posts",
+...       localField: "postID",
+...       foreignField: "_id",
+...       as: "post"
+...     }
+...   },
+...   { $unwind: "$post" },
+...   {
+...     $match: {
+...       "post.postDate": { $gt: ISODate("2024-01-01T00:00:00Z") }
+...     }
+...   },
+...   {
+...     $project: {
+...       _id: 0,
+...       commenterName: "$user.name",
+...       postContent: "$post.content",
+...       commentContent: "$content",
+...       postDate: "$post.postDate"
+...     }
+...   }
+... ]);
+[
+  {
+    commenterName: 'Bob Lee',
+    postContent: 'Hello world! This is my first post.',
+    commentContent: 'Nice post!',
+    postDate: ISODate('2024-01-05T00:00:00.000Z')
+  },
+  {
+    commenterName: 'Alice Smith',
+    postContent: 'Check out my latest recipe!',
+    commentContent: 'Love this!',
+    postDate: ISODate('2024-02-15T00:00:00.000Z')
+  },
+  {
+    commenterName: 'Dana White',
+    postContent: 'Sunset at Bali was unreal.',
+    commentContent: 'Great view!',
+    postDate: ISODate('2024-03-01T00:00:00.000Z')
+  },
+  {
+    commenterName: 'Ethan Ray',
+    postContent: 'Maintenance update completed.',
+    commentContent: 'Thanks for the update.',
+    postDate: ISODate('2024-01-25T00:00:00.000Z')
+  },
+  {
+    commenterName: 'Dana White',
+    postContent: 'Excited about the new tech conference!',
+    commentContent: 'I will attend too!',
+    postDate: ISODate('2024-01-07T00:00:00.000Z')
+  }
+]
+socialMediaDB> // Step 1: Get all users who commented
+... const commenters = db.postComments.distinct("userID");
+... 
+... // Step 2: Get all users who liked posts
+... const likers = db.postLikes.distinct("userID");
+... 
+... // Step 3: Filter to find users who commented but never liked
+... const onlyCommenters = commenters.filter(id => !likers.includes(id));
+... 
+... // Step 4: Show their user details
+... db.appUsers.find({ _id: { $in: onlyCommenters } });
+
+socialMediaDB> db.appUsers.find(
+...   { type: "admin" },
+...   { _id: 0, name: 1, role: 1, lastActivity: 1 }
+... );
+[
+  {
+    name: 'Charlie Admin',
+    role: 'Moderator',
+    lastActivity: ISODate('2024-01-20T00:00:00.000Z')
+  }
+]
+socialMediaDB> const oneYearAgo = new Date();
+... oneYearAgo.setMonth(oneYearAgo.getMonth() - 12);
+... 
+... db.appUsers.find(
+...   { joinDate: { $gte: oneYearAgo } },
+...   { _id: 0, name: 1, email: 1, joinDate: 1 }
+... );
+
+socialMediaDB> // Step 1: Group by user to get total posts and likes
+... const userSummary = db.posts.aggregate([
+...   {
+...     $lookup: {
+...       from: "postLikes",
+...       localField: "_id",
+...       foreignField: "postID",
+...       as: "likes"
+...     }
+...   },
+...   {
+...     $group: {
+...       _id: "$userID",
+...       totalPosts: { $sum: 1 },
+...       totalLikes: { $sum: { $size: "$likes" } }
+...     }
+...   }
+... ]).toArray();
+... 
+... // Step 2: Add a grand total manually
+... const grandTotal = userSummary.reduce(
+...   (acc, cur) => {
+...     acc.totalPosts += cur.totalPosts;
+...     acc.totalLikes += cur.totalLikes;
+...     return acc;
+...   }, { _id: "Grand Total", totalPosts: 0, totalLikes: 0 }
+... );
+... 
+... // Step 3: Output result
+... userSummary.push(grandTotal);
+... printjson(userSummary);
+[
+  {
+    _id: 5,
+    totalPosts: 1,
+    totalLikes: 1
+  },
+  {
+    _id: 4,
+    totalPosts: 1,
+    totalLikes: 1
+  },
+  {
+    _id: 1,
+    totalPosts: 1,
+    totalLikes: 1
+  },
+  {
+    _id: 3,
+    totalPosts: 1,
+    totalLikes: 1
+  },
+  {
+    _id: 2,
+    totalPosts: 1,
+    totalLikes: 1
+  },
+  {
+    _id: 'Grand Total',
+    totalPosts: 5,
+    totalLikes: 5
+  }
+]
+
+socialMediaDB> 
